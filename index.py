@@ -16,7 +16,7 @@ logging.basicConfig(
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
 
-output_files = 'resultado_transferencias.csv'
+output_file = 'resultado_transferencias.csv'
 
 with open(output_file, mode='w', newline='') as result_file:
     writer = csv.writer(result_file)
