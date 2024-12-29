@@ -11,7 +11,7 @@ api_secret = os.getenv("api_secret")
 client = Client(api_key, api_secret)
 
 logging.basicConfig(
-    filename='transferencias.log'
+    filename='transferencias.log',
     level=logging.INFO,
     format='%(asctime)s - %(levelname)s - %(message)s'
 )
@@ -20,13 +20,13 @@ output_file = 'resultado_transferencias.csv'
 
 with open(output_file, mode='w', newline='') as result_file:
     writer = csv.writer(result_file)
-    writer.writerow(['Endereço', 'Valor', 'Status'])
+    writer.writerow(['Endereco', 'Valor', 'Status'])
 
 def realizar_transferencias(input_csv):
     with open('pagamentos.csv', mode='r') as file:
         csv_reader = csv.DictReader(file)
         for row in csv_reader:
-            endereco = row['Endereço']
+            endereco = row['Endereco']
             valor = row['Valor']
 
             try:
@@ -36,7 +36,7 @@ def realizar_transferencias(input_csv):
                     amount=valor,
                     network='BSC'
                 )
-                logging.info(f"Transação enviada com sucesso: Endereço={endereco}, Valor={valor}")
+                logging.info(f"Transacao enviada com sucesso: Endereco={endereco}, Valor={valor}")
                 status = 'Sucesso'
             except Exception as e:
                 logging.error(f"Erro ao enviar para {endereco}: {e}")
@@ -46,5 +46,5 @@ def realizar_transferencias(input_csv):
                 writer = csv.writer(result_file)
                 writer.writerow([endereco, valor, status])
 
-input_csv = 'transferencias.csv'
+input_csv = 'pagamentos.csv'
 realizar_transferencias(input_csv)
